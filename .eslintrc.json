@@ -4,7 +4,7 @@
     "rules": {
         "prettier/prettier": ["error"],
         "spaced-comment": "off",
-        "no-console": "off",
+        "no-console": "warn",
         "consistent-return": "off",
         "func-names": "off",
         "object-shorthand": "off",
@@ -18,6 +18,9 @@
             "Error",
             { "argsIgnorePattern": "req|res|next|val" }
         ],
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "arrow-body-style": "off",
+        "prefer-arrow-callback": "off"
     }
 }
