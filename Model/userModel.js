@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre('save', async function (next) {
     // is modified password
     if (!this.isModified('password')) return next();
-    console.log(this.isModified('password'));
+    // console.log(this.isModified('password'));
     //encrypt  password
     const saltCount = 12;
     this.password = await bcrypt.hash(this.password, saltCount);
