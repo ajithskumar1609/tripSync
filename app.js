@@ -14,6 +14,7 @@ import userRouter from './Routes/userRoute.js';
 import tourRouter from './Routes/tourRoute.js';
 import reviewRouter from './Routes/reviewRoute.js';
 import cartRouter from './Routes/cartRoute.js';
+import wishListRouter from './Routes/wishListRoute.js';
 
 import AppError from './Utils/AppError.js';
 import globalErrorHandler from './Controller/errorController.js';
@@ -67,6 +68,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/carts', cartRouter);
+app.use('/api/v1/wishLists', wishListRouter);
 
 // Test Api
 app.get('/api', (req, res) => {
