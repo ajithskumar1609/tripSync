@@ -59,9 +59,9 @@ export const getUserCart = catchAsync(async (req, res, next) => {
     // calculate total price
 
     const totalPrice = cart.items.reduce((total, item) => {
-        // calculate each item price and quanity
+        // calculate each item price and quantity
         const subTotal = item.tour.price * item.quantity;
-        // add total and subTota
+        // add total and subTotal
         return total + subTotal;
     }, 0);
 
