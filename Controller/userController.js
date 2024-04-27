@@ -1,3 +1,6 @@
+import multer from 'multer';
+import sharp from 'sharp';
+
 import User from '../Model/userModel.js';
 import AppError from '../Utils/AppError.js';
 import catchAsync from '../Utils/CatchAsync.js';
@@ -18,6 +21,28 @@ export const getMe = (req, res, next) => {
     next();
 };
 
+const storage = multer.memoryStorage();
+
+const upload = multer({
+    storage: storage,
+});
+
+export const updateUserPhoto = upload.single('photo');
+
+export const resizeUserPhoto = catchAsync(async (req, res, next) => {
+    if (!req.file) return next();
+
+    req.file.fileName = `user-${req.user.id}-${Date.now()}.jpg`;
+
+    await sharp(req.file.buffer)
+        .resize(500, 500)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/images/user/${req.file.fileName}`);
+
+    next();
+});
+
 export const updateMe = catchAsync(async (req, res, next) => {
     // check if password and confirmPassword not allowed
 
@@ -31,6 +56,8 @@ export const updateMe = catchAsync(async (req, res, next) => {
     }
 
     const filterBody = filterObj(req.body, 'name', 'email');
+
+    if (req.file) filterBody.photo = req.file.fileName;
 
     const updatedUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
         new: true,

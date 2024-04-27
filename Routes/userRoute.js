@@ -9,6 +9,8 @@ import {
     getMe,
     updateMe,
     deleteMe,
+    updateUserPhoto,
+    resizeUserPhoto,
 } from '../Controller/userController.js';
 
 import {
@@ -22,7 +24,7 @@ const router = express.Router();
 router.use(protect);
 
 router.get('/me', protect, getMe, getUser);
-router.patch('/updateMe', protect, updateMe);
+router.patch('/updateMe', protect, updateUserPhoto, resizeUserPhoto, updateMe);
 router.patch('/updateMyPassword', protect, updateMyPassword);
 router.patch('/deleteMe', protect, deleteMe);
 

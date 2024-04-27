@@ -7,6 +7,8 @@ import {
     updateTour,
     deleteTour,
     searchTours,
+    uploadTourImage,
+    resizeTourImage,
 } from '../Controller/tourController.js';
 import { protect, restrictedTo } from '../Controller/authController.js';
 
@@ -33,7 +35,13 @@ router
 router
     .route('/:id')
     .get(protect, getTour)
-    .patch(restrictedTo('admin', 'lead-guide'), updateTour)
+    .patch(
+        protect,
+        restrictedTo('admin', 'lead-guide'),
+        uploadTourImage,
+        resizeTourImage,
+        updateTour,
+    )
     .delete(restrictedTo('admin', 'lead-guide'), deleteTour);
 
 export default router;
