@@ -32,6 +32,7 @@ const factoryHandler = {
         }),
     createOne: (Model) =>
         catchAsync(async (req, res, next) => {
+            if (req.file) req.body.imageURL = req.file.fileName;
             if (!req.body.tour) req.body.tour = req.params.tourId;
             if (!req.body.user) req.body.user = req.user.id;
 
@@ -42,12 +43,12 @@ const factoryHandler = {
                 data: doc,
             });
         }),
-    getOne: (Model, popOptions) =>
+    getOne: (Model, popOptions, popOptions1 = '') =>
         catchAsync(async (req, res, next) => {
             let query = Model.findById(req.params.id);
 
             if (popOptions) {
-                query = query.populate(popOptions);
+                query = query.populate(popOptions).populate(popOptions1);
             }
 
             const doc = await query;

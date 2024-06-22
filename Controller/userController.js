@@ -71,11 +71,21 @@ export const updateMe = catchAsync(async (req, res, next) => {
 });
 
 export const deleteMe = catchAsync(async (req, res, next) => {
-    await User.findByIdAndUpdate(req.user.id, { isActive: false });
+    const deletedUser = await User.findByIdAndDelete(req.user.id);
 
     res.status(204).json({
         status: 'Success',
-        data: null,
+        data: deletedUser,
+    });
+});
+export const deactivateMe = catchAsync(async (req, res, next) => {
+    const updatedUser = await User.findByIdAndUpdate(req.user.id, {
+        isActive: false,
+    });
+
+    res.status(200).json({
+        status: 'Success',
+        data: updatedUser,
     });
 });
 

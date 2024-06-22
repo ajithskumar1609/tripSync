@@ -47,16 +47,26 @@ const createSendToken = (statusCode, user, res) => {
 };
 
 export const signup = catchAsync(async (req, res) => {
+    // Generate Otp
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    const otpHashed = crypto.createHash('sha256').update(otp).digest('hex');
+
+    const otpExpireIn = Date.now() + 10 * 60 * 1000;
     // 1) Create New User
-    const newUser = await User.create(req.body);
-    const otpGenerate = Math.floor(100000 + Math.random() * 900000).toString();
+    const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword,
+        otp: otpHashed,
+        otpExpireIn: otpExpireIn,
+    });
+    await newUser.save();
 
-    newUser.otp = crypto.createHash('sha256').update(otpGenerate).digest('hex');
-    newUser.otpExpireIn = Date.now() + 10 * 60 * 1000;
+    req.session.email = req.body.email;
 
-    await newUser.save({ validateBeforeSave: false });
-
-    await new Email(newUser).sendOtp(otpGenerate);
+    await new Email(newUser).sendOtp(otp);
     //signToken & Response
     res.status(200).json({
         status: 'Success',
@@ -64,68 +74,51 @@ export const signup = catchAsync(async (req, res) => {
     });
 });
 export const verifyOtp = catchAsync(async (req, res, next) => {
-    const { email, otp } = req.body;
+    const { otp, email } = req.body;
 
-    if (!email || !otp) {
+    if (!otp || !email) {
         return next(new AppError('Please provide email and Otp', 401));
     }
+    const hashedOtp = crypto.createHash('sha256').update(otp).digest('hex');
 
     const currentUser = await User.findOne({ email: email });
-    console.log(currentUser);
 
     if (!currentUser) {
         return next(new AppError('There is no user with  email address', 404));
     }
 
-    const hashedOtp = crypto.createHash('sha256').update(otp).digest('hex');
-    //console.log(hashedOtp);
-    //console.log(currentUser.otp);
-
-    if (currentUser.isActive) {
-        return next(
-            new AppError(
-                'User already exit \n  Please choose a different username or email address',
-                409,
-            ),
-        );
+    if (currentUser.otp !== hashedOtp) {
+        return next(new AppError('Invalid otp', 401));
     }
-    if (currentUser.otp === hashedOtp && currentUser.otpExpireIn > Date.now()) {
-        currentUser.isActive = true;
-        currentUser.otp = undefined;
-        currentUser.otpExpireIn = undefined;
-        await currentUser.save({ validateBeforeSave: false });
 
-        await new Email(currentUser).sendWelcome();
-
-        createSendToken(200, currentUser, res);
-    } else {
-        res.status(404).json({
-            status: 'fail',
-            message: 'invalid otp',
-        });
+    if (currentUser.otpExpireIn < new Date()) {
+        return next(new AppError('OTP Expired', 401));
     }
+
+    // update user as verified
+
+    currentUser.isVerified = true;
+    currentUser.isActive = true;
+    currentUser.otp = undefined;
+    currentUser.otpExpireIn = undefined;
+    await currentUser.save({ validateBeforeSave: false });
+
+    await new Email(currentUser).sendWelcome();
+
+    createSendToken(200, currentUser, res);
 });
 
 export const resendOtp = catchAsync(async (req, res, next) => {
     const { email } = req.body;
 
     if (!email) {
-        console.log('not email');
+        next(new AppError('Please provide email address', 403))
     }
 
     const currentUser = await User.findOne({ email: email });
 
     if (!currentUser) {
         return next(new AppError('There is no user with  email address', 404));
-    }
-
-    if (currentUser.isActive) {
-        return next(
-            new AppError(
-                'User already exit \n Please choose a different username or email address',
-                409,
-            ),
-        );
     }
 
     const otpGenerate = Math.floor(100000 + Math.random() * 900000).toString();
@@ -155,14 +148,17 @@ export const login = catchAsync(async (req, res, next) => {
 
     const currentUser = await User.findOne({
         email: email,
+        isVerified: true,
         isActive: true,
     }).select('+password');
+
     // 2) check if user exist and password is correct
     if (
         !currentUser ||
         !(await currentUser.correctPassword(password, currentUser.password))
     ) {
-        return next(new AppError('Incorrect email or password', 401));
+        // return next(new AppError('Incorrect email or password', 401));
+        return next(new AppError('Incorrect email or password ', 401));
     }
     currentUser.password = undefined;
     // send Response
@@ -189,7 +185,6 @@ export const protect = catchAsync(async (req, res, next) => {
         req.headers.authorization.startsWith('Bearer')
     ) {
         token = req.headers.authorization.split(' ')[1];
-        // console.log(token);
     } else if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
@@ -208,7 +203,10 @@ export const protect = catchAsync(async (req, res, next) => {
     );
 
     // check if user still exist
-    const currentUser = await User.findById(decodeToken.id);
+    const currentUser = await User.findOne({
+        _id: decodeToken.id,
+        isActive: true,
+    });
 
     if (!currentUser) {
         return next(
@@ -218,8 +216,6 @@ export const protect = catchAsync(async (req, res, next) => {
             ),
         );
     }
-
-    // console.log(decodeToken);
 
     // Check if your changed Password after the token was issued
     if (currentUser.changePasswordAfter(decodeToken.iat)) {
@@ -233,6 +229,7 @@ export const protect = catchAsync(async (req, res, next) => {
 
     // Grand Access
     req.user = currentUser;
+    res.locals.user = currentUser;
     next();
 });
 
@@ -246,7 +243,10 @@ export const isLoggedIn = async (req, res, next) => {
             );
 
             // user exit
-            const currentUser = await User.findById(decodeToken.id);
+            const currentUser = await User.findOne({
+                _id: decodeToken.id,
+                isActive: true,
+            });
 
             if (!currentUser) {
                 return next();
@@ -257,11 +257,11 @@ export const isLoggedIn = async (req, res, next) => {
                 return next();
             }
             // the logged user;
-            req.locals.user = currentUser;
+            res.locals.user = currentUser;
             return next();
         }
     } catch (err) {
-        next();
+        return next();
     }
     next();
 };
@@ -302,8 +302,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 
     // Send email
     try {
-        const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/resetPassword/${resetToken}`;
-        // console.log(resetUrl);
+        const resetUrl = `${req.protocol}://${req.get('host')}/resetPassword/${resetToken}`;
         await new Email(currentUser, resetUrl).sendResetPassword();
         res.status(200).json({
             status: 'Success',
@@ -333,7 +332,6 @@ export const resetPassword = catchAsync(async (req, res, next) => {
         passwordResetExpireIn: { $gt: Date.now() },
     });
 
-    console.log(currentUser);
     if (!currentUser) {
         return next(new AppError('Invalid token or expired', 401));
     }

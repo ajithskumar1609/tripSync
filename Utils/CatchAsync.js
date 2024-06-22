@@ -1,5 +1,5 @@
 const catchAsync = (fun) => (req, res, next) => {
-    fun(req, res, next).catch((error) => next(error));
+    return fun(req, res, next).catch((error) => next(error));
 };
 
 export default catchAsync;

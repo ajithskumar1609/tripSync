@@ -1,0 +1,28 @@
+<% layout('./layouts/baseTemplate') %>
+<div class="verify-main-container">
+  <div class="wrapper">
+    <form id="otp-form" action="">
+      <h1>Verify Otp</h1>
+      <!-- Error Message -->
+      <p class="error-message" id="error-message"></p>
+      <input type="text" name="email" id="email" value=<%= email %> hidden>
+      <div class="input-box">
+        <input type="text" placeholder="otp" name="otp" required id="otp" />
+        <i class="bx bxs-envelope"></i>
+      </div>
+      <button type="submit" class="btn">Verify</button>
+      <div class="resend-link">
+        <p><a id="resend-otp" href="">Resend Otp</a></p>
+      </div>
+    </form>
+  </div>
+  <div class="popup" id="popup">
+    <img src="/images/image.png" alt="" srcset="" />
+    <h2 id="content">Signup Successfully</h2>
+  </div>
+  <div class="alert-wrapper" id="alert">
+    <div class="alert content">
+      <p>Otp send Success fully</p>
+    </div>
+  </div>
+</div>

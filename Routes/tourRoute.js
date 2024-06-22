@@ -6,9 +6,11 @@ import {
     getTour,
     updateTour,
     deleteTour,
-    searchTours,
     uploadTourImage,
     resizeTourImage,
+    aliasTopTours,
+    getTourStats,
+    getMonthlyPlan,
 } from '../Controller/tourController.js';
 import { protect, restrictedTo } from '../Controller/authController.js';
 
@@ -16,16 +18,19 @@ import reviewRouter from './reviewRoute.js';
 
 const router = express.Router();
 
-// GET REVIEW NESTED ROUTE : GET -> tours/:tourId/reviews
-// GET REVIEW NESTED ROUTE : GET -> tours/:tourId/reviews/:reviewId
-
-// router
-//     .route('/:tourId/reviews')
-//     .post(protect, restrictedTo('user'), createReview);
-
 router.use('/:tourId/reviews', reviewRouter);
 
-router.get('/search', searchTours);
+router.route('/top-5-cheap').get(aliasTopTours, getAllTour);
+
+// router.use(protect, restrictedTo('admin', 'lead-guide', 'guide'));
+
+router
+    .route('/tour-stats')
+    .get(protect, restrictedTo('admin', 'lead-guide', 'guide'), getTourStats);
+
+router
+    .route('/monthly-plan/:year')
+    .get(protect, restrictedTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
 
 router
     .route('/')
@@ -42,6 +47,6 @@ router
         resizeTourImage,
         updateTour,
     )
-    .delete(restrictedTo('admin', 'lead-guide'), deleteTour);
+    .delete(protect, restrictedTo('admin', 'lead-guide'), deleteTour);
 
 export default router;

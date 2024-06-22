@@ -14,10 +14,6 @@ const tourSchema = new mongoose.Schema(
             type: Number,
             required: [true, 'A tour must have duration'],
         },
-        maxGroupSize: {
-            type: Number,
-            required: [true, 'A tour must have maxGroupSize'],
-        },
         ratingsAverage: {
             type: Number,
             default: 4.5,
@@ -58,6 +54,10 @@ const tourSchema = new mongoose.Schema(
             address: String,
             description: String,
         },
+        category: {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Category',
+        },
         locations: [
             {
                 type: {
@@ -79,6 +79,10 @@ const tourSchema = new mongoose.Schema(
             type: Date,
             default: Date.now(),
         },
+        trendingDestination: {
+            type: Boolean,
+            default: false,
+        },
         guides: [
             {
                 type: mongoose.Schema.ObjectId,
@@ -86,7 +90,21 @@ const tourSchema = new mongoose.Schema(
             },
         ],
         images: [String],
-        startDates: [Date],
+        startDates: [
+            {
+                date: {
+                    type: Date,
+                },
+                participant: {
+                    type: Number,
+                    default: 0,
+                },
+                maxParticipants: {
+                    type: Number,
+                    default: 0,
+                },
+            },
+        ],
         slug: String,
     },
     {

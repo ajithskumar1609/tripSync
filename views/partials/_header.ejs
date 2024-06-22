@@ -1,0 +1,37 @@
+<nav>
+  <h1 class="logo">TripSync</h1>
+  <ul>
+    <li><a href="/" class="active">Discover</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Destination</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+  <% if (typeof user !== 'undefined') { %>
+  <div class="profile-container">
+    <div class="profile" id="profile">
+      <img src=<%= `/images/user/${user.photo}`  %> alt="" />
+      <i class="fa-solid fa-angle-down icon" id="icon"></i>
+    </div>
+  </div>
+  <div class="sub-menu-wrapper" id="sub-menu">
+    <div class="sub-menu">
+      <a  class="sub-menu-link" href="/me">
+        <img src="/images/icons/profile.png" alt="profile" />
+        <p>Profile & account</p>
+        <span>></span>
+      </a>
+      <a  class="sub-menu-link" id="log-out">
+        <img src="/images/icons/logout.png" alt="logout" />
+        <p>LogOut</p>
+        <span>></span>
+      </a>
+    </div>
+  </div>
+  <% } else{%>
+  <div class="buttons">
+    <a href="/login" class="btn login-btn">Login </a>
+    <a href="/signUp" class="btn sign-btn">Sign up </a>
+  </div>
+  <% } %>
+</nav>

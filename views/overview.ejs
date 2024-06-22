@@ -1,0 +1,71 @@
+<%- layout('./layouts/baseTemplate') %>
+<div class="banner-container">
+  <div class="content-container">
+    <h1>
+      Let's Plan <br />
+      Adventure Trip
+    </h1>
+    <p>
+      "Embark on unforgettable adventures with ease. Book your dream tour
+      today!"
+    </p>
+  </div>
+  <img src="/images/traveling-concept-with-landmarks.jpg" alt="" class="travel-image" />
+</div>
+<section class="category-container">
+  <div class="category-content">
+    <h1 class="title">Categories</h1>
+    <p>
+      Here lot of interesting destinations to visit, but don't be confused
+      <br />they're already grouped by category
+    </p>
+  </div>
+  <div class="category-list" id="category-list">
+    <% categories.forEach(category => {%>
+    <div class="category-card">
+      <img src=<%=`/images/category/${category.imageURL}` %> alt=<%= category.name%> />
+      <h4><%= category.name %></h4>
+    </div>
+    <%}); %>
+  </div>
+  <div class="scroll-buttons">
+    <button class="scroll-btn" id="previous-btn"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="scroll-btn active" id="next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
+</section>
+<section class="card-container" id="destinations">
+  <h1>Popular Destinations</h1>
+  <div class="card-list">
+    <% trendingDestinations.forEach(tour => { %>
+    <div class="card">
+      <img src=<%=`/images/tour/${tour.imageCover}`%> alt=<%= tour.name %> />
+      <div class="rating-container">
+        <p>
+          <span><i class="fa-regular fa-star"></i></span><strong><%= tour.ratingsAverage.toFixed(1) %></strong>
+        </p>
+      </div>
+      <div class="card-content">
+        <div class="title">
+          <p><%=tour.name %></p>
+          <i>♥️</i>
+        </div>
+        <hr />
+        <div class="card-details">
+          <div class="inner-content">
+            <p>Feature</p>
+            <h5><%= tour.duration %> Days</h5>
+          </div>
+          <div class="inner-content-1">
+            <p>Per Person</p>
+            <h5>$<%= tour.price %></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%}); %>
+  </div>
+  <div class="button">
+    <a href="/allTour">See all Tour Details
+      <span><i class="fa-solid fa-arrow-right"></i></span></a>
+  </div>
+</section>

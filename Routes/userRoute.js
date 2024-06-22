@@ -11,6 +11,7 @@ import {
     deleteMe,
     updateUserPhoto,
     resizeUserPhoto,
+    deactivateMe,
 } from '../Controller/userController.js';
 
 import {
@@ -26,7 +27,8 @@ router.use(protect);
 router.get('/me', protect, getMe, getUser);
 router.patch('/updateMe', protect, updateUserPhoto, resizeUserPhoto, updateMe);
 router.patch('/updateMyPassword', protect, updateMyPassword);
-router.patch('/deleteMe', protect, deleteMe);
+router.delete('/deleteMe', deleteMe);
+router.patch('/deactivateMe', deactivateMe);
 
 router.use(restrictedTo('admin'));
 

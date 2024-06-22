@@ -1,0 +1,233 @@
+/* MAIN CONTAINER */
+
+.main {
+  width: 100%;
+  background-color: #f0f2f5;
+  padding: 15px 20px;
+  display: flex;
+  gap: 13px;
+}
+
+/* SIDE NAVBAR */
+
+.side-nav {
+  width: 300px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 10px 20px;
+}
+
+.side-nav ul {
+  list-style: none;
+}
+
+.side-nav ul .nav-link {
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 4px;
+  transition: transform 0.5s;
+  cursor: pointer;
+}
+
+.nav-link a {
+  color: #000;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-link:hover {
+  transform: translateX(10px);
+  background-color: #5cc879;
+}
+
+.nav-link:hover a,
+.nav-link:hover span i {
+  color: #fff;
+}
+
+.nav-link span {
+  margin-right: 10px;
+}
+
+/* SIDE DETAILS */
+
+.side-details {
+  width: 80%;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.side-details .account-info {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.side-details .account-details-wrapper {
+  width: 620px;
+  /* background-color: blue; */
+}
+
+.side-details .account-details-wrapper form h1 {
+  font-size: 35px;
+  font-weight: 500;
+  color: #5cc879;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.account-details-wrapper form .profile-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-wrapper .profile-image {
+  background-color: transparent;
+  border-radius: 50%;
+  position: relative;
+}
+
+.profile-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.profile-image .round {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #5cc879;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  text-align: center;
+  line-height: 33px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image .round input[type="file"] {
+  position: absolute;
+  transform: scale(2);
+  opacity: 0;
+}
+
+.round input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+}
+
+.account-details-wrapper .input-box {
+  width: 100%;
+  height: 50px;
+  background-color: #5cc879;
+  margin: 50px 0;
+  position: relative;
+  border-radius: 6px;
+}
+
+.account-details-wrapper .input-box input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: none;
+  border-radius: 6px;
+  padding: 10px 10px 10px 30px;
+  background-color: #f0f2f5;
+  color: #000;
+}
+
+.account-details-wrapper .input-box label {
+  position: absolute;
+  top: -33px;
+  left: 5px;
+  font-weight: 500;
+}
+
+.account-details-wrapper .input-box input::placeholder {
+  font-size: 30px;
+  color: black;
+}
+
+.account-details-wrapper .btn-container {
+  text-align: right;
+}
+
+.account-details-wrapper .btn-container button {
+  width: 200px;
+  height: 50px;
+  border-radius: 30px;
+  border: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  background-color: #5cc879;
+  text-transform: uppercase;
+}
+
+/* ACCOUNT SETTINGS */
+.account-settings {
+  width: 100%;
+  padding: 20px 40px;
+  margin: 20px 0;
+}
+
+.account-settings .title h1 {
+  font-size: 35px;
+  font-weight: 500;
+  color: #5cc879;
+  text-align: center;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.account-settings .buttons {
+  margin: 30px;
+}
+
+.buttons button {
+  padding: 7px 20px;
+  margin: 0px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.buttons .deactivate {
+  background-color: #2874f0;
+  color: #fff;
+}
+
+.buttons .delete {
+  background-color: #df6676;
+  color: #fff;
+}
+
+.alert-wrapper {
+  width: 400px;
+  background-color: green;
+  padding: 20px 30px;
+  border-radius: 6px;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(-100% - 3px));
+  overflow: hidden;
+  transition: transform 0.5s;
+}
+
+.alert-open {
+  transform: translateX(-50%) translateY(0%);
+}

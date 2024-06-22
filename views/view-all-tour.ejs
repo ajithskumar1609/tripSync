@@ -1,0 +1,164 @@
+<% layout('./layouts/baseTemplate') %>
+<!-- PRODUCT SECTION -->
+<div class="product-section-container">
+  <!-- FILTER SECTION -->
+
+  <div class="filter-section">
+    <!-- TITLE SECTION -->
+
+    <div class="title-container">
+      <p>Filters</p>
+    </div>
+
+    <!-- PRICE SECTION -->
+
+    <div class="price-container">
+      <div class="title-price">
+        <p>Price</p>
+        <p class="clear" id="clear-btn">Clear</p>
+      </div>
+      <div class="select-box-container">
+        <div class="select-box-min">
+          <select name="" id="price-select-box-min" class="min">
+            <option value="100">Min</option>
+            <option value="500">500</option>
+          </select>
+        </div>
+        <p class="seprate-text">to</p>
+        <div class="select-box-max">
+          <select name="" id="price-select-box-max" class="max-select-box">
+            <option value="25000">Max</option>
+            <option value="1000">1000</option>
+            <option value="5000">5000</option>
+            <option value="10000">10000</option>
+            <option value="25000">25000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMER RATING SECTION -->
+
+    <div class="customer-rating-container">
+      <div class="title">
+        <p>Customer Ratings</p>
+        <span><i class="fa-solid fa-chevron-down" id="arrow-icon"></i></span>
+      </div>
+      <div class="rating-menu" id="rating-menu">
+        <ul>
+          <li>
+            <input type="checkbox" class="rating-check-box" value="4"/>
+            <p>4 Above</p>
+            <span><i class="fa-solid fa-star"></i></span>
+          </li>
+          <li>
+            <input type="checkbox" class="rating-check-box" value="3"/>
+            <p>3 Above</p>
+            <span><i class="fa-solid fa-star"></i></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SORT BY SECTION -->
+
+    <div class="sort-container">
+      <div class="title">
+        <p>Sort By</p>
+        <span><i class="fa-solid fa-chevron-down" id="arrow-sort-icon"></i></span>
+      </div>
+      <div class="sort-menu" id="sort-menu">
+        <ul>
+          <li>
+            <input type="checkbox" value="price"  class="sort-checkbox" />
+            <p>Price -- Low to High</p>
+          </li>
+          <li>
+            <input type="checkbox" value="-price" class="sort-checkbox" />
+            <p>Price -- High to Low</p>
+          </li>
+          <li>
+            <input type="checkbox" />
+            <p>Newest First</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DIFFICULTY SECTION -->
+
+    <div class="difficulty-container">
+      <div class="title">
+        <p>Difficulty</p>
+        <span><i class="fa-solid fa-chevron-down" id="arrow-difficulty-icon"></i></span>
+      </div>
+      <div class="difficulty-menu" class="difficulty-menu">
+        <ul>
+          <li>
+            <input type="checkbox" class="difficulty-checkbox" value="easy" />
+            <p>Easy</p>
+          </li>
+          <li>
+            <input type="checkbox" value="medium" class="difficulty-checkbox" />
+            <p>Medium</p>
+          </li>
+          <li>
+            <input type="checkbox" value="difficult" class="difficulty-checkbox" />
+            <p>Difficulty</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOUR BOOKING SECTION -->
+  <div class="tour-list-section">
+    <% if (tours.length > 0) { %>
+    <div class="tour-booking-card-container">
+      <% tours.forEach(tour => { %>
+      <div class="tour-booking-card">
+        <img src=<%=`/images/tour/${tour.imageCover}`  %> alt="" class="tour-image" />
+        <div class="tour-booking-card-content">
+          <div class="tour-booking-card-title">
+            <h3><%=tour.name %></h3>
+            <p>
+              <span><i class="fa-solid fa-star"></i></span><%= tour.ratingsAverage.toFixed(1) %>
+            </p>
+          </div>
+          <div class="tour-booking-card-description">
+            <p>
+              <%= tour.summary %>
+            </p>
+          </div>
+          <div class="tour-booking-card-icons">
+            <span><i class="fa-solid fa-people-group"></i></span>
+            <p><span>2M</span>VisitPer/Year</p>
+          </div>
+          <div class="tour-booking-card-footer">
+            <p>$<%=tour.price %>.00</p>
+            <a href=<%= `/tour/${tour.slug}`%>>Details</a>
+          </div>
+        </div>
+      </div>
+      <%}); %>
+    </div>
+    <% }else{ %>
+    <p>The Date tour not available</p>
+    <% } %>
+    <hr />
+    <div class="pagination-container">
+      <p>Page 1 of 2,204</p>
+      <div class="pages">
+        <ul>
+          <!-- <li><a href="#" class="previous">Previous</a></li> -->
+          <li class="page-active"><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#" class="next">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

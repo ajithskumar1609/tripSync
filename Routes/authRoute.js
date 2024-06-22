@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.post('/signUp', signup);
+router.post('/signup', signup);
 router.post('/login', login);
 router.get('/logout', logout);
 router.post('/verifyOtp', verifyOtp);

@@ -1,20 +1,24 @@
 /* Express configuration*/
 import express from 'express';
 import morgan from 'morgan';
+// import ejs from 'ejs';
+import ejsMate from 'ejs-mate';
 import cookieParser from 'cookie-parser';
 import rateLimiter from 'express-rate-limit';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import mongoSanitization from 'express-mongo-sanitize';
-import xss from 'xss-clean';
+// import xss from 'xss-clean';
 import hpp from 'hpp';
+import session from 'express-session';
 
 import indexRouter from './Routes/index.js';
 import authRouter from './Routes/authRoute.js';
 import userRouter from './Routes/userRoute.js';
 import tourRouter from './Routes/tourRoute.js';
 import reviewRouter from './Routes/reviewRoute.js';
-import cartRouter from './Routes/cartRoute.js';
-import wishListRouter from './Routes/wishListRoute.js';
+import categoryRouter from './Routes/categoryRoute.js';
+import viewRouter from './Routes/viewRoute.js';
+import bookingRouter from './Routes/bookingRoute.js';
 
 import AppError from './Utils/AppError.js';
 import globalErrorHandler from './Controller/errorController.js';
@@ -22,23 +26,41 @@ import globalErrorHandler from './Controller/errorController.js';
 const app = express();
 
 // security http header
-app.use(helmet());
+// app.use(helmet()); //! not allowed in axios cdn
 
 if (process.env.NODE_ENV === 'Development') {
     app.use(morgan('dev'));
 }
 
 // Serve Static file
-app.use(express.static('public'));
+app.use(express.static('./public'));
+
+// set layout
+app.engine('ejs', ejsMate);
+
+// set template engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 // Body parser
 app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+// express session config
+app.use(
+    session({
+        secret: 'secret key',
+        resave: false,
+        saveUninitialized: false,
+    }),
+);
 
 // Data Sanitization against No-Sql query Injection
 app.use(mongoSanitization());
 
 // Data Sanitization against xss
-app.use(xss());
+// app.use(xss()); //! not allowed in axios cdn
 
 //  Use the hpp middleware to prevent parameter pollution
 app.use(
@@ -58,17 +80,19 @@ const limiter = rateLimiter({
     message: 'To many requests from this Ip,Please try again in a hour',
 });
 
+
 // use limiter middleware
 app.use('/api', limiter);
 
 // Mounting Route
-app.use('/', indexRouter);
+app.use('/', viewRouter);
+app.use('/test', indexRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/carts', cartRouter);
-app.use('/api/v1/wishLists', wishListRouter);
+app.use('/api/v1/category', categoryRouter);
+app.use('/api/v1/booking', bookingRouter);
 
 // Test Api
 app.get('/api', (req, res) => {

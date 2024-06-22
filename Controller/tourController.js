@@ -55,22 +55,87 @@ export const getAllTour = factoryHandler.getAll(Tour);
 
 export const createTour = factoryHandler.createOne(Tour);
 
-export const getTour = factoryHandler.getOne(Tour, 'reviews');
+export const getTour = factoryHandler.getOne(Tour, 'reviews', 'category');
 
 export const updateTour = factoryHandler.updateOne(Tour);
 
 export const deleteTour = factoryHandler.deleteOne(Tour);
 
-export const searchTours = catchAsync(async (req, res, next) => {
-    const searchQuery = req.query.q;
+export const aliasTopTours = (req, res, next) => {
+    req.query.limit = '5';
+    req.query.sort = '-ratingsAverage,price';
+    req.query.fields = 'name,price,ratingsAverage,difficulty,summary';
+    next();
+};
 
-    const regex = new RegExp(searchQuery, 'i');
-
-    const allTours = await Tour.find({ name: regex });
+export const getTourStats = catchAsync(async (req, res, next) => {
+    const stats = await Tour.aggregate([
+        {
+            $match: { ratingsAverage: { $gt: 4.5 } },
+        },
+        {
+            $group: {
+                // _id: null,
+                _id: { $toUpper: '$difficulty' },
+                numTours: { $sum: 1 },
+                numRatings: { $sum: '$ratingsQuantity' },
+                avgRating: { $avg: '$ratingsAverage' },
+                avgPrice: { $avg: '$price' },
+                minPrice: { $min: '$price' },
+                maxPrice: { $max: '$price' },
+            },
+        },
+        {
+            $sort: { avgPrice: 1 },
+        },
+    ]);
 
     res.status(200).json({
         status: 'Success',
-        results: allTours.length,
-        data: allTours,
+        results: stats.length,
+        data: stats,
+    });
+});
+
+export const getMonthlyPlan = catchAsync(async (req, res, next) => {
+    const { year } = req.params;
+    console.log(year);
+
+    const plan = await Tour.aggregate([
+        {
+            $unwind: '$startDates',
+        },
+        {
+            $match: {
+                'startDates.date': {
+                    $gte: new Date(`${year}-01-01`),
+                    $lte: new Date(`${year}-12-31`),
+                },
+            },
+        },
+        {
+            $group: {
+                _id: { $month: '$startDates.date' },
+                numOfStartTours: { $sum: 1 },
+                tours: { $push: '$name' },
+            },
+        },
+        {
+            $addFields: { month: '$_id' },
+        },
+        {
+            $project: {
+                _id: 0,
+            },
+        },
+        {
+            $sort: { numOfStartTours: -1 },
+        },
+    ]);
+
+    res.status(200).json({
+        status: 'Success',
+        results: plan.length,
+        data: plan,
     });
 });

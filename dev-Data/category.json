@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Adventure Tours",
+        "description": "Exciting tours filled with adventure activities like hiking, rafting, and camping.",
+        "imageURL": "category-adventure.jpg"
+    },
+    {
+        "name": "City Tours",
+        "description": "Explore the vibrant cities with guided tours covering major landmarks and attractions.",
+        "imageURL": "category-city-tours.jpg"
+    },
+    {
+        "name": "Cultural Tours",
+        "description": "Immerse yourself in the rich culture and heritage of different regions with cultural tours.",
+        "imageURL": "category-cultural.jpg"
+    },
+    {
+        "name": "Beach Holidays",
+        "description": "Relax and unwind on pristine beaches with beach holiday packages.",
+        "imageURL": "category-beach-holday.jpg"
+    },
+    {
+        "name": "Wildlife Safaris",
+        "description": "Embark on thrilling wildlife safaris to encounter exotic animals in their natural habitats.",
+        "imageURL": "category-wildlife-safaris.jpg"
+    },
+    {
+        "name": "Historical Tours",
+        "description": "Journey through history with guided tours of ancient ruins, monuments, and historical sites.",
+        "imageURL": "category-historical.jpg"
+    },
+    {
+        "name": "Cruise Vacations",
+        "description": "Set sail on luxurious cruises to explore multiple destinations with all-inclusive amenities.",
+        "imageURL": "category-cruise-vacations.jpg"
+    },
+    {
+        "name": "Food and Wine Tours",
+        "description": "Indulge in culinary delights and exquisite wines with food and wine tours around the world.",
+        "imageURL": "category-food-wine.jpg"
+    },
+    {
+        "name": "Mountain Expeditions",
+        "description": "Challenge yourself with mountain expeditions and trekking adventures in breathtaking landscapes.",
+        "imageURL": "category-mountain-expedition.jpg"
+    },
+    {
+        "name": "Family Holidays",
+        "description": "Create unforgettable memories with family-friendly holiday packages designed for all ages.",
+        "imageURL": "category-family-holiday.jpg"
+    }
+]

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>OTP Verification</title>
+        <style>
+            /* Reset styles */
+            body,
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Main styles */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f6f6f6;
+                padding: 20px;
+            }
+
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            p {
+                color: #666;
+                margin-bottom: 20px;
+            }
+
+            .otp-code {
+                font-size: 24px;
+                color: #007bff;
+                margin-bottom: 20px;
+            }
+
+            .note {
+                color: #999;
+                font-style: italic;
+                margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>OTP Verification</h1>
+            <p>Dear <%=firstName %>,</p>
+            <p>
+                Your One-Time Password <%= defaultValue %> for verification is:
+            </p>
+            <p class="otp-code"><%= defaultValue %></p>
+            <p class="note">
+                Note: This OTP is valid for a single use and should not be
+                shared with anyone.
+            </p>
+            <p>If you did not request this OTP, please ignore this email.</p>
+            <p>Thank you,</p>
+            <p>The TripSync Team</p>
+        </div>
+    </body>
+</html>

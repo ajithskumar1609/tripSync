@@ -1,0 +1,67 @@
+<%- layout('./layouts/baseTemplate.ejs') %>
+<div class="main">
+  <div class="side-nav">
+    <ul>
+      <li class="nav-link">
+        <a href="/me">
+          <span><i class="fa-solid fa-circle-user"></i></span>
+          Account Settings
+        </a>
+      </li>
+      <li class="nav-link">
+        <span><i class="fa-solid fa-lock"></i></span>
+        <a href="/security">Password & Security</a>
+      </li>
+      <li class="nav-link">
+        <span><i class="fa-solid fa-suitcase"></i></span>
+        <a href="#">My Bookings</a>
+      </li>
+      <li class="nav-link">
+        <span><i class="fa-regular fa-star"></i></span>
+        <a href="#">My Reviews</a>
+      </li>
+      <li class="nav-link">
+        <span><i class="fa-solid fa-credit-card"></i></span>
+        <a href="#">Billings</a>
+      </li>
+    </ul>
+  </div>
+  <div class="side-details">
+    <div class="account-info">
+      <div class="account-details-wrapper">
+        <form action="" id="form-user-data">
+          <h1>Personal Information</h1>
+          <div class="profile-wrapper">
+            <div class="profile-image">
+              <img src=<%= `/images/user/${user.photo}` %> alt="user-image" id="image" />
+              <div class="round">
+                <input type="file" id="photo" />
+                <i class="fa fa-camera"></i>
+              </div>
+            </div>
+          </div>
+          <div class="input-box">
+            <label for="">Name</label>
+            <input type="text" value=<%= user.name %> id="name" />
+          </div>
+          <div class="input-box">
+            <label for="">Email Address</label>
+            <input type="text" value=<%= user.email %> id="email" />
+          </div>
+          <div class="btn-container">
+            <button id="saved-btn">Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="account-settings">
+      <div class="title">
+        <h1>Settings</h1>
+      </div>
+      <div class="buttons">
+        <button class="deactivate" id="deactivate-btn">Deactivate Account</button>
+        <button class="delete" id="delete-btn">Delete Account</button>
+      </div>
+    </div>
+  </div>
+</div>

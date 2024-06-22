@@ -1,0 +1,28 @@
+  <div class="tour-booking-card-container">
+    <% tours.forEach(tour => { %>
+    <div class="tour-booking-card">
+      <img src=<%=`/images/tour/${tour.imageCover}`  %> alt="" class="tour-image" />
+      <div class="tour-booking-card-content">
+        <div class="tour-booking-card-title">
+          <h3><%=tour.name %></h3>
+          <p>
+            <span><i class="fa-solid fa-star"></i></span><%= tour.ratingsAverage.toFixed(1) %>
+          </p>
+        </div>
+        <div class="tour-booking-card-description">
+          <p>
+            <%= tour.summary %>
+          </p>
+        </div>
+        <div class="tour-booking-card-icons">
+          <span><i class="fa-solid fa-people-group"></i></span>
+          <p><span>2M</span>VisitPer/Year</p>
+        </div>
+        <div class="tour-booking-card-footer">
+          <p>$<%=tour.price %>.00</p>
+          <a href=<%= `/tour/${tour.slug}`%>>Details</a>
+        </div>
+      </div>
+    </div>
+    <%}); %>
+  </div>

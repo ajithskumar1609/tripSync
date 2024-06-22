@@ -1,16 +1,33 @@
 import nodemailer from 'nodemailer';
+import fs from 'fs';
+import ejs from 'ejs';
+import { htmlToText } from 'html-to-text';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// directory set
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 class Email {
-    constructor(user, url) {
+    constructor(user, url, resetUri) {
         this.from = 'Ajith kumar s <ajithskumar1609@gmail.com>';
         this.to = user.email;
         this.firstName = user.name.split(' ')[0];
         this.url = url;
+        this.resetUri = resetUri;
     }
 
     newTransport() {
-        if (process.env.NODE_ENV === 'Production') {
-            return 1;
+        if (process.env.NODE_ENV === 'production') {
+            // SendGrid
+            return nodemailer.createTransport({
+                service: 'SendGrid',
+                auth: {
+                    user: process.env.SENDGRID_USERNAME,
+                    pass: process.env.SENDGRID_PASSWORD,
+                },
+            });
         }
 
         return nodemailer.createTransport({
@@ -23,70 +40,53 @@ class Email {
         });
     }
 
-    async send(subject, text) {
+    async send(template, subject, defaultValue = '') {
+        //1)read the template
+        const readTemplate = fs.readFileSync(
+            `${__dirname}/../views/Email/${template}.ejs`,
+            'utf-8',
+        );
+
+        // console.log(readTemplate);
+
+        // 2) template compile in ejs
+
+        const compiledTemplate = ejs.compile(readTemplate);
+
+        // 3) Render template with data
+
+        const html = compiledTemplate({
+            firstName: this.firstName,
+            url: this.url,
+            defaultValue: defaultValue,
+            subject: subject,
+        });
+
         const mailOptions = {
             from: this.from,
             to: this.to,
             subject: subject,
-            text: text,
+            html: html,
+            text: htmlToText(html),
         };
 
         await this.newTransport().sendMail(mailOptions);
     }
 
     async sendOtp(otpGenerate) {
-        const subject = `One-Time otp ${otpGenerate} Verification`;
-        const text = `Dear ${this.firstName},
-
-        Your one-time password ${otpGenerate} for verification is: [OTP Code]. Please use this code within [time limit] minutes to complete your verification process.
-        
-        If you did not request this OTP, please ignore this message.
-        
-        Thank you,
-        Ajith kumar s`;
-        await this.send(subject, text);
+        await this.send(
+            'otp',
+            `Your One-Time Password ${otpGenerate} Verification Code`,
+            otpGenerate,
+        );
     }
 
     async sendWelcome() {
-        const subject = 'Welcome to TripSync Family. Start Exploring Now 🌍';
-        const text = `Dear ${this.firstName},
-
-        Welcome to TripSync – your gateway to seamless travel experiences! We're thrilled to have you on board. Get ready to embark on unforgettable journeys and explore the world like never before.
-        
-        With TripSync, you can effortlessly discover and book tours, activities, and accommodations tailored to your preferences. Whether you're seeking adrenaline-pumping adventures, cultural immersions, or tranquil getaways, we've got you covered.
-        
-        Stay tuned for exclusive deals, insider tips, and personalized recommendations to make your travels truly exceptional.
-        
-        Ready to turn your travel dreams into reality? Start exploring with TripSync today!
-        
-        Happy travels,
-        The TripSync Team`;
-
-        await this.send(subject, text);
+        await this.send('welcome', 'Welcome to TripSyn Family');
     }
 
     async sendResetPassword() {
-        const subject = 'Reset Your Password: Important Action Required!';
-        const message = `Dear ${this.firstName},
-
-        We hope this email finds you well.
-        
-        It appears that there has been a request to reset the password associated with your account. To ensure the security of your account, please follow the instructions below to reset your password:
-        
-        Click on the following link to reset your password: ${this.url}
-        Follow the prompts to create a new password.
-        Once completed, your account will be secure with the new password.
-        Please note that this link will expire after [insert time period], so we recommend completing the password reset process as soon as possible.
-        
-        If you did not request a password reset or believe this email was sent to you in error, please disregard it.
-        
-        If you have any concerns or require further assistance, please don't hesitate to contact our support team at [support email or phone number].
-        
-        Thank you for your attention to this matter.
-        
-        Best regards,
-        TripSync Team`;
-        await this.send(subject, message);
+        await this.send('forgotPassword', 'Reset Your Password');
     }
 }
 
