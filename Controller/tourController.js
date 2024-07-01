@@ -99,7 +99,7 @@ export const getTourStats = catchAsync(async (req, res, next) => {
 
 export const getMonthlyPlan = catchAsync(async (req, res, next) => {
     const { year } = req.params;
-    console.log(year);
+    // console.log(year);
 
     const plan = await Tour.aggregate([
         {

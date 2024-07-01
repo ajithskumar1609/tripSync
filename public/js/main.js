@@ -164,7 +164,7 @@ if (priceMaxElement) {
     priceMaxElement.addEventListener('change', function () {
         const minPrice = priceMinElement.value;
         const maxPrice = priceMaxElement.value;
-        console.log(maxPrice)
+        // console.log(maxPrice)
         filterPrice(minPrice, maxPrice)
     })
 }
@@ -179,7 +179,6 @@ if (rating) {
     rating.forEach((el) => {
         el.addEventListener('change', () => {
             if (el.checked === true) {
-                console.log(el.value);
                 filterRating(el.value);
             }
         })
@@ -192,7 +191,7 @@ if (sort) {
     sort.forEach((el) => {
         el.addEventListener('change', () => {
             if (el.checked === true) {
-                console.log(el.value);
+                // console.log(el.value);
                 filterSort(el.value);
             }
         })
@@ -285,7 +284,7 @@ if (tourBookingSection) {
 
 
 if (wishListSection) {
-    console.log(tourBookingSection);
+    // console.log(tourBookingSection);
     wishListRemoveButtons.forEach((btn) => {
         btn.addEventListener('click', (event) => {
             const { tourId } = event.target.dataset
@@ -299,7 +298,7 @@ if (wishListSection) {
 
 // FORGOT FORM 
 
-console.log(forgotForm);
+// console.log(forgotForm);
 
 if (forgotForm) {
     forgotForm.addEventListener('submit', (event) => {

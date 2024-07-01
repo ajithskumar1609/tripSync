@@ -11,7 +11,7 @@ export const forgotPassword = async (email) => {
                 email: email
             }
         })
-        console.log(res);
+        // console.log(res);
 
         if (res.data.status === 'Success') {
             showAlert('success', 'reset password token send successfully')

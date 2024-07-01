@@ -9,7 +9,7 @@ export function filterPrice(minPrice, maxPrice) {
             if (status === 'success') {
                 $('.tour-list-section').html(data);
             } else {
-                console.log(data);
+                // console.log(data);
             }
         })
     })
@@ -27,10 +27,10 @@ export function filterRating(rating) {
         const url = `/filteredTour?ratingsAverage[gte]=${rating}`;
         $.get(url, function (data, status) {
             if (status === 'success') {
-                console.log(data)
+                // console.log(data)
                 $('.tour-list-section').html(data);
             } else {
-                console.log(data);
+                // console.log(data);
             }
         })
     })
@@ -41,10 +41,10 @@ export function filterSort(value) {
         const url = `/filteredTour?sort=${value}`;
         $.get(url, function (data, status) {
             if (status === 'success') {
-                console.log(data)
+                // console.log(data)
                 $('.tour-list-section').html(data);
             } else {
-                console.log(data);
+                // console.log(data);
             }
         })
     })
@@ -54,10 +54,10 @@ export function filterDifficulty(value) {
         const url = `/filteredTour?difficulty=${value}`;
         $.get(url, function (data, status) {
             if (status === 'success') {
-                console.log(data)
+                // console.log(data)
                 $('.tour-list-section').html(data);
             } else {
-                console.log(data);
+                // console.log(data);
             }
         })
     })

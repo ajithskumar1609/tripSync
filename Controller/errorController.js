@@ -95,7 +95,7 @@ export default (err, req, res, next) => {
 
     if (process.env.NODE_ENV === 'development') {
         sendErrorDevelopment(err, req, res);
-        console.log(err);
+        // console.log(err);
     } else if (process.env.NODE_ENV === 'production') {
         // console.log(err.message, '🔥');
         let error = { ...err };

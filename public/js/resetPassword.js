@@ -16,7 +16,7 @@ export const resetPassword = async (resetToken, password, confirmPassword) => {
             }
         })
 
-        console.log(res)
+        // console.log(res)
 
         if (res.data.status === 'Success') {
             showAlert('success', 'password updated successfully')

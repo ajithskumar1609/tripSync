@@ -19,7 +19,7 @@ export const signup = async (name, email, password, confirmPassword) => {
             }
         })
 
-        console.log(res)
+        // console.log(res)
         if (res.data.status === 'Success') {
             showAlert('success', 'otp send Successfully')
             window.setTimeout(() => {

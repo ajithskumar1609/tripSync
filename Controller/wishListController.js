@@ -30,7 +30,7 @@ export const addItemToWishList = catchAsync(async (req, res, next) => {
     wishList.items.push(tour)
     await wishList.save();
 
-    console.log(wishList)
+    // console.log(wishList)
 
     res.status(200).json({
         status: 'Success',

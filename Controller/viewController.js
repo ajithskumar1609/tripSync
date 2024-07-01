@@ -9,7 +9,7 @@ import WishList from '../Model/wishListModel.js';
 
 export const getOverView = catchAsync(async (req, res) => {
     const categories = await Category.find();
-    console.log(categories);
+    // console.log(categories);
     const trendingDestinations = await Tour.find({ trendingDestination: true });
     res.status(200).render('overview', {
         title: 'Home page',
@@ -127,7 +127,7 @@ export const getTour = catchAsync(async (req, res, next) => {
         path: 'reviews',
         fields: 'rating review user'
     });
-    console.log(tour);
+    // console.log(tour);
 
     if (!tour) return next(new AppError('There is no tour with that name.', 404))
 
@@ -147,7 +147,7 @@ export const getWishList = catchAsync(async (req, res, next) => {
 
     const wishList = await WishList.findOne({ user: userId }).populate('items');
 
-    console.log(wishList);
+    // console.log(wishList);
 
     if (!wishList) {
         return next(new AppError('Add to WishList', 400))

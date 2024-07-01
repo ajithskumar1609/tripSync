@@ -22,7 +22,7 @@ export async function login(email, password) {
             }, 1500)
         }
 
-        console.log(res);
+        // console.log(res);
     } catch (err) {
         errorMessage(err.response.data.message)
     }
@@ -36,7 +36,7 @@ export const logout = async () => {
             url: '/api/v1/auth/logout'
         })
 
-        console.log(res);
+        // console.log(res);
         if (res.data.status === 'Success') location.reload(true);
 
     } catch (err) {

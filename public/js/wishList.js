@@ -8,14 +8,14 @@ export const addItemToWishList = async (tourId) => {
 
     try {
         const res = await axios(`/api/v1/wishList/addToWishList/${tourId}`)
-        console.log(res);
+        // console.log(res);
 
         if (res.data.status === 'Success') {
             showAlert('success', 'Item add to wishlist');
             location.reload(true);
         }
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         showAlert('error', err.response.data.message)
     }
 }
@@ -29,7 +29,7 @@ export const removeItemFromWishList = async (tourId) => {
                 method: 'delete',
                 url: `/api/v1/wishList/removeItemFromWishList/${tourId}`
             })
-            console.log(res);
+            // console.log(res);
 
             if (res.data.status === 'Success') {
                 showAlert('success', 'Item was deleted')
@@ -38,7 +38,7 @@ export const removeItemFromWishList = async (tourId) => {
         }
 
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         showAlert('error', err.response.data.message)
     }
 }

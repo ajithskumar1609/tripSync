@@ -1,15 +1,16 @@
 /* Express configuration*/
 import express from 'express';
 import morgan from 'morgan';
-// import ejs from 'ejs';
 import ejsMate from 'ejs-mate';
 import cookieParser from 'cookie-parser';
 import rateLimiter from 'express-rate-limit';
-// import helmet from 'helmet';
 import mongoSanitization from 'express-mongo-sanitize';
-// import xss from 'xss-clean';
 import hpp from 'hpp';
 import session from 'express-session';
+import compression from 'compression';
+// import helmet from 'helmet';
+// import ejs from 'ejs';
+// import xss from 'xss-clean';
 
 import indexRouter from './Routes/index.js';
 import authRouter from './Routes/authRoute.js';
@@ -24,6 +25,7 @@ import viewRouter from './Routes/viewRoute.js';
 import AppError from './Utils/AppError.js';
 import globalErrorHandler from './Controller/errorController.js';
 
+// START EXPRESS APPLICATION
 const app = express();
 
 // security http header
@@ -47,6 +49,11 @@ app.set('views', './views');
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+
+// COMPRESS THE RESPONSE TEXT 
+app.use(compression());
+
 
 // express session config
 app.use(

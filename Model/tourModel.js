@@ -161,11 +161,11 @@ tourSchema.pre(/^find/, function (next) {
     next();
 });
 
-tourSchema.post(/^find/, function (doc, next) {
-    console.log(`Query Executed ${Date.now() - this.start} Milliseconds`);
-    // console.log(doc);
-    next();
-});
+// tourSchema.post(/^find/, function (doc, next) {
+//     console.log(`Query Executed ${Date.now() - this.start} Milliseconds`);
+//     // console.log(doc);
+//     next();
+// });
 
 // tourSchema.pre('save', async function (next) {
 //     const guidesPromise = this.guides.map(
