@@ -5,7 +5,7 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start:dev": "nodemon server.js",
+    "start:dev": "node server.js",
     "start:prod": "SET NODE_ENV=production&&nodemon server.js",
     "startDev:debug": "ndb server.js",
     "startProd:debug": "SET NODE_ENV=production&&ndb server.js",
@@ -57,5 +57,8 @@
     "prettier": "^3.2.5",
     "webpack": "^5.92.0",
     "webpack-cli": "^5.1.4"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
