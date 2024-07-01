@@ -1,16 +1,18 @@
-<nav>
-  <h1 class="logo">TripSync</h1>
+<nav class="navbar">
+  <a href="/" class="logo">TripSync</a>
   <ul>
     <li><a href="/" class="active">Discover</a></li>
     <li><a href="#">About</a></li>
-    <li><a href="#">Destination</a></li>
+    <li><a href="/tours">Destination</a></li>
     <li><a href="#">Contact</a></li>
   </ul>
-
   <% if (typeof user !== 'undefined') { %>
+    <div class="wishlist">
+      <a href="/wishlist" class="heart-icon"><i class="fa-regular fa-heart"></i></a>
+    </div>
   <div class="profile-container">
     <div class="profile" id="profile">
-      <img src=<%= `/images/user/${user.photo}`  %> alt="" />
+      <img src=<%= `/images/users/${user.photo}`  %> alt="" />
       <i class="fa-solid fa-angle-down icon" id="icon"></i>
     </div>
   </div>
@@ -30,8 +32,8 @@
   </div>
   <% } else{%>
   <div class="buttons">
-    <a href="/login" class="btn login-btn">Login </a>
-    <a href="/signUp" class="btn sign-btn">Sign up </a>
+    <a href="/login" class=" login-btn">Login </a>
+    <a href="/signUp" class=" sign-btn">Sign up </a>
   </div>
   <% } %>
 </nav>

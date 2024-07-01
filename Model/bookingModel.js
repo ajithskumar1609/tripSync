@@ -15,13 +15,13 @@ const bookingSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'A tour must have price'],
     },
-    paid: {
-        type: Boolean,
-        default: true,
-    },
     createdAt: {
         type: Date,
         default: new Date(),
+    },
+    paid: {
+        type: Boolean,
+        default: true,
     },
 });
 
@@ -29,7 +29,7 @@ bookingSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'tour',
         select: 'name',
-    });
+    }).populate('user')
     next();
 });
 

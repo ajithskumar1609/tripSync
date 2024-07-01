@@ -1,4 +1,5 @@
 <%- layout('./layouts/baseTemplate.ejs') %>
+<% block('head').append(`<link rel="stylesheet" href="styles/profile.css" /> `) %>
 <div class="main">
   <div class="side-nav">
     <ul>
@@ -33,7 +34,7 @@
           <h1>Personal Information</h1>
           <div class="profile-wrapper">
             <div class="profile-image">
-              <img src=<%= `/images/user/${user.photo}` %> alt="user-image" id="image" />
+              <img src=<%= `/images/users/${user.photo}` %> alt="user-image" id="image" />
               <div class="round">
                 <input type="file" id="photo" />
                 <i class="fa fa-camera"></i>

@@ -38,7 +38,7 @@
   <div class="card-list">
     <% trendingDestinations.forEach(tour => { %>
     <div class="card">
-      <img src=<%=`/images/tour/${tour.imageCover}`%> alt=<%= tour.name %> />
+      <img src=<%=`/images/tours/${tour.imageCover}`%> alt=<%= tour.name %> />
       <div class="rating-container">
         <p>
           <span><i class="fa-regular fa-star"></i></span><strong><%= tour.ratingsAverage.toFixed(1) %></strong>
@@ -65,7 +65,7 @@
     <%}); %>
   </div>
   <div class="button">
-    <a href="/allTour">See all Tour Details
+    <a href="/tours">See all Tour Details
       <span><i class="fa-solid fa-arrow-right"></i></span></a>
   </div>
 </section>

@@ -6,6 +6,13 @@ import { updateSettings } from './updateSetting.js';
 import { deleteAccount, deactivateAccount } from './accountSetting.js';
 import { sideScroll } from './category.js';
 import { clearFilterPrice, filterPrice, filterRating, filterSort, filterDifficulty } from './allTour.js';
+import { bookTour } from './stripe.js';
+import { addItemToWishList, removeItemFromWishList } from './wishList.js';
+import { forgotPassword } from './forgotPassword.js';
+import { resetPassword } from './resetPassword.js';
+
+
+
 
 // DOM SELECTION
 const loginForm = document.getElementById('login-form');
@@ -30,6 +37,13 @@ const sort = document.querySelectorAll('.sort-checkbox');
 const difficulty = document.querySelectorAll('.difficulty-checkbox');
 const sortingElement = document.querySelector('.sort-container');
 const difficultyElement = document.querySelector('.difficulty-container');
+const bookBtn = document.getElementById('book-tour');
+const tourBookingSection = document.querySelector('.product-section-container');
+const wishListSection = document.querySelector('.wishlist-section-container');
+const wishListButtons = document.querySelectorAll('.wishlist-btn');
+const wishListRemoveButtons = document.querySelectorAll('.remove-btn');
+const forgotForm = document.getElementById('forgot-form');
+const resetForm = document.getElementById('reset-form');
 
 // login existing user
 
@@ -246,3 +260,63 @@ if (difficultyElement) {
     })
 }
 
+
+// book tour
+
+if (bookBtn) {
+    bookBtn.addEventListener('click', (event) => {
+        event.target.textContent = 'processing.....';
+        const { tourId } = event.target.dataset
+        bookTour(tourId);
+    })
+}
+
+
+if (tourBookingSection) {
+    wishListButtons.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+            const { tourId } = event.target.dataset
+            // console.log(tourId);
+            addItemToWishList(tourId)
+        })
+
+    })
+}
+
+
+if (wishListSection) {
+    console.log(tourBookingSection);
+    wishListRemoveButtons.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+            const { tourId } = event.target.dataset
+            // console.log(tourId);
+            removeItemFromWishList(tourId)
+        })
+
+    })
+}
+
+
+// FORGOT FORM 
+
+console.log(forgotForm);
+
+if (forgotForm) {
+    forgotForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = document.getElementById('email').value;
+        forgotPassword(email);
+    })
+}
+
+
+if (resetForm) {
+    resetForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const resetToken = document.getElementById('reset-token').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        resetPassword(resetToken, password, confirmPassword);
+    })
+}

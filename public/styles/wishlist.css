@@ -1,0 +1,214 @@
+.wishlist-section-container {
+  min-width: 100%;
+  padding: 10px;
+  background-color: #f0f2f5;
+  display: flex;
+  gap: 15px;
+}
+
+.wishlist-empty-container {
+  width: 90%;
+  height: 450px;
+  margin: 10px auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.wishlist-empty-container .btn {
+  padding: 18px 40px;
+  background-color: #da4417;
+  text-decoration: none;
+  color: white;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+/* TOUR BOOKING SECTION */
+.tour-list-section {
+  width: 90%;
+  margin: 10px auto;
+  background-color: #fff;
+}
+
+.tour-booking-card-container {
+  width: 100%;
+  padding: 20px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+
+.tour-booking-card-container .tour-booking-card {
+  width: 320px;
+  border-radius: 6px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
+  transition: 0.5s;
+}
+
+.tour-booking-card:hover {
+  transform: scale(1.02);
+}
+
+.tour-booking-card .tour-image {
+  width: 100%;
+  height: 230px;
+  border-radius: 6px;
+}
+
+.tour-booking-card-content {
+  width: 100%;
+  padding: 20px;
+}
+
+.tour-booking-card-content .tour-booking-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tour-booking-card-title h3 {
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.tour-booking-card-title p {
+  font-size: 12px;
+  color: #676a6e;
+}
+
+.tour-booking-card-title p span {
+  margin-right: 10px;
+}
+
+.tour-booking-card-title p span i {
+  color: #676a6e;
+}
+
+.tour-booking-card-description {
+  margin: 10px 0px;
+  width: 100%;
+}
+
+.tour-booking-card-description p {
+  width: 100%;
+  height: 85px;
+  font-size: 17px;
+  color: #676a6e;
+}
+
+.tour-booking-card-icons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tour-booking-card-icons span i {
+  color: #676a6e;
+}
+
+.tour-booking-card-icons p span {
+  color: #676a6e;
+  margin-right: 5px;
+  font-weight: 400;
+}
+
+.tour-booking-card-icons p {
+  font-weight: 500;
+}
+
+.tour-booking-card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 10px;
+}
+
+.tour-booking-card-footer p {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.tour-booking-card-footer a {
+  text-decoration: none;
+  padding: 8px 20px;
+  background-color: #ff521c;
+  border-radius: 6px;
+  color: #fff;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.tour-booking-card-footer a:hover {
+  background-color: #da4417;
+}
+
+.tour-list-section .pagination-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-container .pages {
+  width: 80%;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pages ul {
+  list-style: none;
+}
+
+.pages ul li {
+  display: inline-block;
+  border-radius: 50%;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  margin: 15px;
+}
+
+.pages ul .page-active {
+  background-color: #0000ff;
+  color: #fff;
+}
+
+.pages ul .page-active a {
+  color: #fff;
+}
+
+.pages ul li a {
+  text-decoration: none;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pages .next {
+  border-radius: none;
+  color: #0000ff;
+}
+
+.wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.wishlist-icon:hover {
+  color: red;
+}

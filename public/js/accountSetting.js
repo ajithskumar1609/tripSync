@@ -14,7 +14,7 @@ export const deleteAccount = async () => {
                 url: '/api/v1/users/deleteMe',
             });
 
-            if (res.data.status === 'Success') {
+            if (res) {
                 showAlert('success', 'You account has been deleted');
                 window.setInterval(() => {
                     location.assign('/')

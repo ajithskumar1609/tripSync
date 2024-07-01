@@ -1,0 +1,43 @@
+<% layout('./layouts/baseTemplate') %>
+<% block('head').append(`<link rel="stylesheet" href="styles/wishlist.css" />`) %>
+<!-- PRODUCT SECTION -->
+<div class="wishlist-section-container">
+  <!-- TOUR BOOKING SECTION -->
+  <div class="tour-list-section">
+    <h1 style="text-align: center;margin: 20px auto;">Wish List</h1>
+    <% if (tours.length > 0) { %>
+    <div class="tour-booking-card-container">
+      <% tours.forEach(tour => { %>
+      <div class="tour-booking-card">
+        <img src=<%=`/images/tours/${tour.imageCover}`  %> alt="" class="tour-image" />
+        <div class="tour-booking-card-content">
+          <div class="tour-booking-card-title">
+            <h3><%=tour.name %></h3>
+            <p>
+              <span><i class="fa-solid fa-star"></i></span><%= tour.ratingsAverage.toFixed(1) %>
+            </p>
+          </div>
+          <div class="tour-booking-card-description">
+            <p>
+              <%= tour.summary %>
+            </p>
+          </div>
+          <div class="tour-booking-card-icons">
+            <p>$<%=tour.price %>.00</p>
+          </div>
+          <div class="tour-booking-card-footer">
+            <a class="remove-btn" data-tour-id=<%= tour.id %>>Remove</a>
+            <a href=<%= `/tours/${tour.slug}`%>>Details</a>
+          </div>
+        </div>
+      </div>
+      <%}); %>
+    </div>
+    <% }else{ %>
+    <div class="wishlist-empty-container">
+      <h2>Wishlist List is Empty</h2>
+      <a href="/tours" class="btn">Go to All Tours</a>
+    </div>
+    <% } %>
+  </div>
+</div>

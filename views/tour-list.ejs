@@ -1,7 +1,7 @@
   <div class="tour-booking-card-container">
     <% tours.forEach(tour => { %>
     <div class="tour-booking-card">
-      <img src=<%=`/images/tour/${tour.imageCover}`  %> alt="" class="tour-image" />
+      <img src=<%=`/images/tours/${tour.imageCover}`  %> alt="" class="tour-image" />
       <div class="tour-booking-card-content">
         <div class="tour-booking-card-title">
           <h3><%=tour.name %></h3>
@@ -20,7 +20,7 @@
         </div>
         <div class="tour-booking-card-footer">
           <p>$<%=tour.price %>.00</p>
-          <a href=<%= `/tour/${tour.slug}`%>>Details</a>
+          <a href=<%= `/tours/${tour.slug}`%>>Details</a>
         </div>
       </div>
     </div>

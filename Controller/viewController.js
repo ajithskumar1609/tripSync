@@ -3,9 +3,13 @@ import Tour from '../Model/tourModel.js';
 // import factoryHandler from './handleFactory.js';
 import ApiFeatures from '../Utils/ApiFeatures.js';
 import catchAsync from '../Utils/CatchAsync.js';
+import AppError from '../Utils/AppError.js';
+import WishList from '../Model/wishListModel.js';
+
 
 export const getOverView = catchAsync(async (req, res) => {
     const categories = await Category.find();
+    console.log(categories);
     const trendingDestinations = await Tour.find({ trendingDestination: true });
     res.status(200).render('overview', {
         title: 'Home page',
@@ -39,6 +43,7 @@ export const getVerifyOtpForm = (req, res) => {
 export const getForgotPasswordForm = (req, res) => {
     res.status(200).render('forgotPassword', {
         title: 'Forgot Password',
+        partials: false,
     });
 };
 export const getResetPasswordForm = (req, res) => {
@@ -46,6 +51,7 @@ export const getResetPasswordForm = (req, res) => {
     res.status(200).render('resetPassword', {
         title: 'Reset Password',
         resetToken: resetToken,
+        partials: false
     });
 };
 
@@ -111,6 +117,48 @@ export const getTrendingDestination = catchAsync(async (req, res, next) => {
         partials: true,
     });
 });
+
+// retrieve the tour
+export const getTour = catchAsync(async (req, res, next) => {
+
+    const tourName = req.params.slug;
+
+    const tour = await Tour.findOne({ slug: tourName }).populate({
+        path: 'reviews',
+        fields: 'rating review user'
+    });
+    console.log(tour);
+
+    if (!tour) return next(new AppError('There is no tour with that name.', 404))
+
+    res.status(200).render('tour', {
+        title: `${tour.name}`,
+        partials: true,
+        tour,
+    })
+
+})
+
+// WISH LIST 
+
+export const getWishList = catchAsync(async (req, res, next) => {
+
+    const userId = req.user.id;
+
+    const wishList = await WishList.findOne({ user: userId }).populate('items');
+
+    console.log(wishList);
+
+    if (!wishList) {
+        return next(new AppError('Add to WishList', 400))
+    }
+
+    res.status(200).render('wishlist', {
+        title: 'Your WishList',
+        partials: true,
+        tours: wishList.items
+    })
+})
 
 
 // $lt: new Date(new Date(date).getTime() + 24 * 60 * 60 * 1000)

@@ -41,6 +41,7 @@ const sendErrorDevelopment = (err, req, res) => {
     return res.status(err.statusCode).render('error', {
         title: 'Something went wrong',
         message: err.message,
+        partials: true
     });
 };
 
@@ -72,6 +73,7 @@ const sendErrorProduction = (err, req, res) => {
         return res.status(err.statusCode).render('error', {
             title: 'something went wrong',
             message: err.message,
+            partials: true
         });
     }
 
@@ -83,6 +85,7 @@ const sendErrorProduction = (err, req, res) => {
     return res.status(err.statuscode).render('error', {
         title: 'Some thing went wrong!',
         message: 'Please try again later',
+        partials: true
     });
 };
 

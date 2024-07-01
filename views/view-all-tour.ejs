@@ -1,4 +1,5 @@
 <% layout('./layouts/baseTemplate') %>
+<% block('head').append(`<link rel="stylesheet" href="styles/AllTour.css" />`) %>
 <!-- PRODUCT SECTION -->
 <div class="product-section-container">
   <!-- FILTER SECTION -->
@@ -117,8 +118,13 @@
     <div class="tour-booking-card-container">
       <% tours.forEach(tour => { %>
       <div class="tour-booking-card">
-        <img src=<%=`/images/tour/${tour.imageCover}`  %> alt="" class="tour-image" />
+        <img src=<%=`/images/tours/${tour.imageCover}`  %> alt="" class="tour-image" />
         <div class="tour-booking-card-content">
+          <% if (tour.isWishListed) { %>
+            <i class='bx bxs-heart  wishlist-icon wishlist-btn' style='color:#ff0000' ></i>
+          <% }else{ %>
+            <i class="fa-regular fa-heart wishlist-icon wishlist-btn" style="color: #ff0000;" data-tour-id=<%= tour.id %>></i>
+          <%}%>
           <div class="tour-booking-card-title">
             <h3><%=tour.name %></h3>
             <p>
@@ -136,7 +142,7 @@
           </div>
           <div class="tour-booking-card-footer">
             <p>$<%=tour.price %>.00</p>
-            <a href=<%= `/tour/${tour.slug}`%>>Details</a>
+            <a href=<%= `/tours/${tour.slug}`%>>Details</a>
           </div>
         </div>
       </div>

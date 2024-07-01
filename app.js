@@ -17,8 +17,9 @@ import userRouter from './Routes/userRoute.js';
 import tourRouter from './Routes/tourRoute.js';
 import reviewRouter from './Routes/reviewRoute.js';
 import categoryRouter from './Routes/categoryRoute.js';
-import viewRouter from './Routes/viewRoute.js';
+import wishListRouter from './Routes/wishListRoute.js'
 import bookingRouter from './Routes/bookingRoute.js';
+import viewRouter from './Routes/viewRoute.js';
 
 import AppError from './Utils/AppError.js';
 import globalErrorHandler from './Controller/errorController.js';
@@ -92,6 +93,7 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/category', categoryRouter);
+app.use('/api/v1/wishList', wishListRouter);
 app.use('/api/v1/booking', bookingRouter);
 
 // Test Api
