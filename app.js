@@ -7,7 +7,6 @@ import rateLimiter from 'express-rate-limit';
 import mongoSanitization from 'express-mongo-sanitize';
 import hpp from 'hpp';
 import session from 'express-session';
-import compression from 'compression';
 // import helmet from 'helmet';
 // import ejs from 'ejs';
 // import xss from 'xss-clean';
@@ -51,8 +50,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-// COMPRESS THE RESPONSE TEXT 
-app.use(compression());
+
 
 
 // express session config
